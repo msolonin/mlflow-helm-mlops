@@ -17,5 +17,5 @@ mlflow:
 persistence:
   enabled: true
   accessMode: ReadWriteOnce
-  size: 50Mi
+  size: 1Gi
   storageClass: gp2
