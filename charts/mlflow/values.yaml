@@ -1,9 +1,9 @@
 replicaCount: 1
 
 image:
-  registry: docker.io
-  repository: bitnami/mlflow
-  tag: 3.3.2
+  registry: ghcr.io
+  repository: mlflow/mlflow
+  tag: 2.14.3
   pullPolicy: IfNotPresent
 
 service:
@@ -12,7 +12,7 @@ service:
 
 mlflow:
   backend: "sqlite:///mlflow.db"
-  defaultArtifactRoot: "/bitnami/mlflow/artifacts"
+  defaultArtifactRoot: "/mlruns"
 
 persistence:
   enabled: true
