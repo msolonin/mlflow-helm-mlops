@@ -11,11 +11,12 @@ service:
   port: 5000
 
 mlflow:
-  backend: "sqlite:///mlflow.db"
-  defaultArtifactRoot: "/mlruns"
+  backend: "sqlite:///bitnami/mlflow/mlflow.db"
+  defaultArtifactRoot: "/bitnami/mlflow/artifacts"
 
 persistence:
   enabled: true
   accessMode: ReadWriteOnce
   size: 2Gi
   storageClass: gp2
+
