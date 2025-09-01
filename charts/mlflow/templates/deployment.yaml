@@ -23,6 +23,15 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: 5000
-          envFrom:
-            - configMapRef:
-                name: {{ include "mlflow.fullname" . }}-config
+          env:
+            - name: MLFLOW_BACKEND_STORE_URI
+              value: {{ .Values.mlflow.backend | quote }}
+            - name: MLFLOW_DEFAULT_ARTIFACT_ROOT
+              value: {{ .Values.mlflow.defaultArtifactRoot | quote }}
+          volumeMounts:
+            - name: mlflow-data
+              mountPath: /bitnami/mlflow
+      volumes:
+        - name: mlflow-data
+          persistentVolumeClaim:
+            claimName: {{ include "mlflow.fullname" . }}
