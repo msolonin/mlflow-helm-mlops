@@ -2,5 +2,5 @@ replicaCount: 1
 
 image:
   repository: "mlflow/mlflow"
-  tag: "2.5.0"
+  tag: "2.8.0"
   pullPolicy: IfNotPresent
