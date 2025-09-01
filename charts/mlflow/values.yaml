@@ -1,0 +1,6 @@
+replicaCount: 1
+
+image:
+  repository: "mlflow/mlflow"
+  tag: "2.5.0"
+  pullPolicy: IfNotPresent
