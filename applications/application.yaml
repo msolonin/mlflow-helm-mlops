@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: "https://github.com/<your-username>/mlflow-helm-demo.git"
+    repoURL: "https://github.com/msolonin/mlflow-helm-mlops.git"
     targetRevision: main
     path: "charts/mlflow"
     helm:
