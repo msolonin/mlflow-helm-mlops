@@ -1,6 +1,29 @@
 replicaCount: 1
 
 image:
-  repository: "bitnami/mlflow"
-  tag: "3.3.2"
+  registry: docker.io
+  repository: bitnami/mlflow
+  tag: 3.3.2
   pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  port: 80
+
+backend:
+  database:
+    type: sqlite
+    path: /bitnami/mlflow/mlflow.db
+
+persistence:
+  enabled: true
+  storageClass: ""
+  accessMode: ReadWriteOnce
+  size: 5Gi
+  mountPath: /bitnami/mlflow
+
+env:
+  - name: MLFLOW_TRACKING_URI
+    value: sqlite:///bitnami/mlflow/mlflow.db
+  - name: MLFLOW_ARTIFACT_ROOT
+    value: /bitnami/mlflow
