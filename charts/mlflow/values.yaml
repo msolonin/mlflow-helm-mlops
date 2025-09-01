@@ -7,23 +7,14 @@ image:
   pullPolicy: IfNotPresent
 
 service:
-  type: LoadBalancer
-  port: 80
+  type: ClusterIP
+  port: 5000
 
-backend:
-  database:
-    type: sqlite
-    path: /bitnami/mlflow/mlflow.db
+mlflow:
+  backend: "sqlite:///mlflow.db"
+  defaultArtifactRoot: "/bitnami/mlflow/artifacts"
 
 persistence:
   enabled: true
-  storageClass: ""
   accessMode: ReadWriteOnce
-  size: 5Gi
-  mountPath: /bitnami/mlflow
-
-env:
-  - name: MLFLOW_TRACKING_URI
-    value: sqlite:///bitnami/mlflow/mlflow.db
-  - name: MLFLOW_ARTIFACT_ROOT
-    value: /bitnami/mlflow
+  size: 1Gi
