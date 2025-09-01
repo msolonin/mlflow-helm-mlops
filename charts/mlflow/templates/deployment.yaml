@@ -22,21 +22,15 @@ spec:
           image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - containerPort: 5000
-          command:
-            - mlflow
-            - server
-            - --backend-store-uri
-            - {{ .Values.mlflow.backend }}
-            - --default-artifact-root
-            - {{ .Values.mlflow.defaultArtifactRoot }}
-            - --host
-            - "0.0.0.0"
-            - --port
-            - "5000"
+            - containerPort: {{ .Values.service.port }}
+          env:
+            - name: MLFLOW_BACKEND_STORE_URI
+              value: "{{ .Values.mlflow.backend }}"
+            - name: MLFLOW_DEFAULT_ARTIFACT_ROOT
+              value: "{{ .Values.mlflow.defaultArtifactRoot }}"
           volumeMounts:
             - name: mlflow-data
-              mountPath: /mlruns
+              mountPath: "{{ .Values.mlflow.defaultArtifactRoot }}"
       volumes:
         - name: mlflow-data
           persistentVolumeClaim:
