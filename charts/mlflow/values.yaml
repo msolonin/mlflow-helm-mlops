@@ -15,6 +15,4 @@ mlflow:
   defaultArtifactRoot: "/mlruns"
 
 persistence:
-  enabled: true
-  accessMode: ReadWriteOnce
-  size: 1Gi
+  enabled: false
