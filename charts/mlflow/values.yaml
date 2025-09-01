@@ -1,9 +1,9 @@
 replicaCount: 1
 
 image:
-  registry: ghcr.io
-  repository: mlflow/mlflow
-  tag: 2.14.3
+  registry: docker.io
+  repository: bitnami/mlflow
+  tag: 3.3.2
   pullPolicy: IfNotPresent
 
 service:
