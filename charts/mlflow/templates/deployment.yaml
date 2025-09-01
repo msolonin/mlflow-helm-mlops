@@ -19,18 +19,24 @@ spec:
     spec:
       containers:
         - name: mlflow
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: 5000
-          env:
-            - name: MLFLOW_BACKEND_STORE_URI
-              value: {{ .Values.mlflow.backend | quote }}
-            - name: MLFLOW_DEFAULT_ARTIFACT_ROOT
-              value: {{ .Values.mlflow.defaultArtifactRoot | quote }}
+          command:
+            - mlflow
+            - server
+            - --backend-store-uri
+            - {{ .Values.mlflow.backend }}
+            - --default-artifact-root
+            - {{ .Values.mlflow.defaultArtifactRoot }}
+            - --host
+            - "0.0.0.0"
+            - --port
+            - "5000"
           volumeMounts:
             - name: mlflow-data
-              mountPath: /bitnami/mlflow
+              mountPath: /mlruns
       volumes:
         - name: mlflow-data
           persistentVolumeClaim:
