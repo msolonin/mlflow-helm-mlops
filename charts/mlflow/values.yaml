@@ -10,13 +10,34 @@ service:
   type: ClusterIP
   port: 5000
 
-mlflow:
-  backend: "sqlite:///bitnami/mlflow/mlflow.db"
-  defaultArtifactRoot: "/bitnami/mlflow/artifacts"
+ingress:
+  enabled: false
+  hostname: mlflow.example.com
+  annotations: {}
+  tls: []
 
 persistence:
   enabled: true
-  accessMode: ReadWriteOnce
-  size: 2Gi
-  storageClass: gp2
+  storageClass: standard   # EBS CSI StorageClass
+  accessModes:
+    - ReadWriteOnce
+  size: 10Gi
 
+resources:
+  requests:
+    cpu: 250m
+    memory: 512Mi
+  limits:
+    cpu: 500m
+    memory: 1Gi
+
+env:
+  BACKEND_STORE_URI: sqlite:///mlflow.db
+  ARTIFACT_ROOT: /bitnami/mlflow/artifacts
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+metrics:
+  enabled: false
