@@ -20,7 +20,9 @@ tracking:
   serviceAccount:
     create: true
     name: ""
-    
+  ingress:
+    enabled: false
+
 postgresql:
   enabled: true
   postgresqlDatabase: mlflow
@@ -51,5 +53,6 @@ mlflow:
 
 rbac:
   create: true
+
 logging:
   level: info
