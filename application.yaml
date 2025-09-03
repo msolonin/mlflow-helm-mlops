@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: "https://github.com/msolonin/mlflow-helm-mlops.git"
-    targetRevision: main
-    path: "charts/mlflow"
+    repoURL: https://charts.bitnami.com/bitnami
+    chart: mlflow
+    targetRevision: 3.3.2   # or latest
     helm:
       valueFiles:
         - values.yaml
