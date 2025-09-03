@@ -11,8 +11,6 @@ spec:
     targetRevision: 3.3.2
     helm:
       releaseName: mlflow
-      valueFiles:
-        - full-values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: mlflow
