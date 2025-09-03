@@ -3,16 +3,16 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: mlflow
-  namespace: infra-tools   # namespace, де запущений ArgoCD
+  namespace: infra-tools
 spec:
   project: default
   source:
-    repoURL: https://charts.bitnami.com/bitnami   # офіційний helm-repo Bitnami
+    repoURL: https://charts.bitnami.com/bitnami
     chart: mlflow
-    targetRevision: 2.1.6   # <-- перевірити актуальну версію helm-чарту
+    targetRevision: 3.3.2
     helm:
       releaseName: my-mlflow
-      values: |             # inline values.yaml
+      values:
         service:
           type: ClusterIP
         tracking:
@@ -31,7 +31,7 @@ spec:
             rootPassword: minio123
   destination:
     server: https://kubernetes.default.svc
-    namespace: infra-tools   # сюди деплоїться MLflow
+    namespace: infra-tools
   syncPolicy:
     automated:
       prune: true
