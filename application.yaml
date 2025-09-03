@@ -6,10 +6,13 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://charts.bitnami.com/bitnami
-    chart: mlflow
-    targetRevision: 3.3.2   # or latest
-    helm: {}
+    repoURL: "https://github.com/msolonin/mlflow-helm-mlops.git"
+    targetRevision: main
+    path: charts/mlflow
+    helm:
+      releaseName: mlflow
+      valueFiles:
+        - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: mlflow
