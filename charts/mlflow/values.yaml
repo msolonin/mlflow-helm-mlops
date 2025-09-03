@@ -13,6 +13,8 @@ service:
 tracking:
   tls:
     enabled: false
+  metrics:
+    enabled: false
     
 postgresql:
   enabled: true
