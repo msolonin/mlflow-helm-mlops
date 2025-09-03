@@ -60,3 +60,6 @@ logging:
 run:
   source:
     type: "local"
+  serviceAccount:
+    create: true
+    name: ""
