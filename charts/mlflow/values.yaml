@@ -56,3 +56,7 @@ rbac:
 
 logging:
   level: info
+
+run:
+  source:
+    type: "local"
