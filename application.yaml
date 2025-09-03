@@ -9,9 +9,7 @@ spec:
     repoURL: https://charts.bitnami.com/bitnami
     chart: mlflow
     targetRevision: 3.3.2   # or latest
-    helm:
-      valueFiles:
-        - values.yaml
+    helm: {}
   destination:
     server: https://kubernetes.default.svc
     namespace: mlflow
