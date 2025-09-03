@@ -1,4 +1,3 @@
-# application.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -11,27 +10,12 @@ spec:
     chart: mlflow
     targetRevision: 3.3.2
     helm:
-      releaseName: my-mlflow
-      values:
-        service:
-          type: ClusterIP
-        tracking:
-          tls:
-            enabled: false
-        postgresql:
-          enabled: true
-          auth:
-            username: mlflow_user
-            password: mlflow_password
-            database: mlflow
-        minio:
-          enabled: true
-          auth:
-            rootUser: minio
-            rootPassword: minio123
+      releaseName: mlflow
+      valueFiles:
+        - values.yaml      
   destination:
     server: https://kubernetes.default.svc
-    namespace: infra-tools
+    namespace: mlflow 
   syncPolicy:
     automated:
       prune: true
