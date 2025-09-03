@@ -1,3 +1,4 @@
+# application.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -6,20 +7,34 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: "https://github.com/msolonin/mlflow-helm-mlops.git"
-    targetRevision: main
-    path: charts/mlflow
+    repoURL: https://charts.bitnami.com/bitnami
+    chart: mlflow
+    targetRevision: 3.3.2
     helm:
-      releaseName: mlflow
-      valueFiles:
-        - values.yaml
+      releaseName: my-mlflow
+      values:
+        service:
+          type: ClusterIP
+        tracking:
+          tls:
+            enabled: false
+        postgresql:
+          enabled: true
+          auth:
+            username: mlflow_user
+            password: mlflow_password
+            database: mlflow
+        minio:
+          enabled: true
+          auth:
+            rootUser: minio
+            rootPassword: minio123
   destination:
     server: https://kubernetes.default.svc
-    namespace: mlflow
+    namespace: infra-tools
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-
