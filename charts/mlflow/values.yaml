@@ -10,6 +10,10 @@ service:
   type: ClusterIP
   port: 80
 
+tracking:
+  tls:
+    enabled: false
+    
 postgresql:
   enabled: true
   postgresqlDatabase: mlflow
