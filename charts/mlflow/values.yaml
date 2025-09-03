@@ -1,3 +1,5 @@
+# values.yaml for ArgoCD deployment of Bitnami MLflow
+
 replicaCount: 1
 
 image:
@@ -8,36 +10,66 @@ image:
 
 service:
   type: ClusterIP
-  port: 5000
+  port: 80  # expose MLflow on port 80 internally
 
 ingress:
-  enabled: false
-  hostname: mlflow.example.com
+  enabled: false  # set true if you want ArgoCD to manage ingress
   annotations: {}
+  hosts:
+    - host: mlflow.example.com
+      paths:
+        - /
   tls: []
 
-persistence:
-  enabled: true
-  storageClass: standard   # EBS CSI StorageClass
-  accessModes:
-    - ReadWriteOnce
-  size: 10Gi
-
 resources:
-  requests:
-    cpu: 250m
-    memory: 512Mi
   limits:
     cpu: 500m
     memory: 1Gi
+  requests:
+    cpu: 250m
+    memory: 512Mi
 
-env:
-  BACKEND_STORE_URI: sqlite:///mlflow.db
-  ARTIFACT_ROOT: /bitnami/mlflow/artifacts
+# PostgreSQL backend
+postgresql:
+  enabled: true
+  postgresqlDatabase: mlflow
+  postgresqlUsername: mlflow_user
+  postgresqlPassword: mlflow_password
+  persistence:
+    enabled: true
+    size: 1Gi
 
-nodeSelector: {}
-tolerations: []
-affinity: {}
+# MinIO for artifact storage
+minio:
+  enabled: true
+  accessKey: minio
+  secretKey: minio123
+  persistence:
+    enabled: true
+    size: 5Gi
+  service:
+    type: ClusterIP
+    port: 9000
 
-metrics:
-  enabled: false
+persistence:
+  enabled: true
+  storageClass: ""
+  accessMode: ReadWriteOnce
+  size: 5Gi
+
+# MLflow configuration
+mlflow:
+  backendStore: postgresql
+  artifactStore: s3
+  s3:
+    bucket: mlflow
+    endpoint: my-mlflow-minio:9000
+    secure: false
+
+# Optional: RBAC for MLflow UI
+rbac:
+  create: true
+
+# Optional: Logging configuration
+logging:
+  level: info
